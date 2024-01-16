@@ -2,6 +2,8 @@
 import { storage } from "@/lib/firebase/init";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function ProfilePage() {
@@ -10,11 +12,12 @@ export default function ProfilePage() {
   const [edit, setEdit] = useState(false);
   const [profile, setProfile] = useState<any>([]);
   const [profileImage, setProfileImage] = useState("");
-  const [selectedImage, setSelectedImage] = useState<File>();
+  const [selectedImage, setSelectedImage] = useState<any>();
   const [loading, setLoading] = useState(false);
   const [downloadURL, setDownloadURL] = useState("");
   const [progressUpload, setProgressUpload] = useState(0);
   const [error, setError] = useState("");
+  const router = useRouter();
 
   const imageChange = (e: any) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -23,12 +26,12 @@ export default function ProfilePage() {
   };
 
   const removeSelectedImage = () => {
-    setSelectedImage();
+    setSelectedImage('');
   };
 
   useEffect(() => {
     const fetchUser = async () => {
-      // Pastikan session dan user ada sebelum mencoba mengakses id
+  
       if (session && session.user && session.user.id) {
         const id = session.user.id;
         const res = await fetch(`/api/user/getuser?id=${id}`);
@@ -91,8 +94,8 @@ export default function ProfilePage() {
                 throw new Error("API request failed");
               }
 
-              // Reset form after successful upload and API call
               setSelectedImage(undefined);
+              setEdit(false);
               const updatedProfileRes = await fetch(
                 `/api/user/getuser?id=${session?.user.id}`
               );
@@ -174,7 +177,7 @@ export default function ProfilePage() {
         </div>
         <div className="w-full flex items-center px-5 ">
           <div className="mr-[86px]">
-            <button>
+            <button onClick={() => router.push("/dashboard")}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -211,9 +214,9 @@ export default function ProfilePage() {
         <div className="flex items-center w-full flex-col">
           <div className="relative w-[11rem] h-[11rem]">
             {profile && profile.profileUrl ? (
-              <img src={profile.profileUrl} className="rounded-full w-full h-full"/>
+              <Image alt="" width={200} height={200} src={profile.profileUrl} className="rounded-full w-full h-full"/>
             ) : (
-              <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?20200418092106" alt="" />
+              <Image width={200} height={200} src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?20200418092106" alt="" />
             )}
           </div>
           <div className="flex flex-col w-full items-center">
@@ -353,9 +356,9 @@ export default function ProfilePage() {
           <div className="flex items-center w-full flex-col">
             <div className="relative w-[11rem] h-[11rem]">
               {profile && profile.profileUrl ? (
-                <img src={profile.profileUrl} className="rounded-full w-full h-full"/>
+                <Image alt="" width={200} height={200} src={profile.profileUrl} className="rounded-full w-full h-full"/>
               ) : (
-                <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?20200418092106" alt="" />
+                <Image width={200} height={200} src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?20200418092106" alt="" />
               )}
               <div className="absolute top-28 rounded-full right-0 bg-white w-[4rem] h-[4rem] fle items-center justify-center">
                 <button
@@ -364,7 +367,9 @@ export default function ProfilePage() {
                   }}
                   className="w-full h-full rounded-full"
                 >
-                  <img
+                  <Image
+                    width={50}
+                    height={50}
                     src="/src/Images/Camera.png"
                     alt=""
                     className="flex items-center justify-center w-full h-full object-cover"

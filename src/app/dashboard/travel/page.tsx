@@ -171,7 +171,7 @@ export default function ProfilePage() {
                   <div className="w-full">
                     <p>{story.description}</p>
                     <div className="">
-                      <img src={story.photoURL} alt={story.username} />
+                      <Image width={300} height={300} src={story.photoURL} alt={story.username} />
                     </div>
                   </div>
                   <div className="bg-white shadow-lg drop-shadow-lg rounded-[2rem] w-full mt-5 px-2 h-[1.76981rem] flex items-center justify-between">

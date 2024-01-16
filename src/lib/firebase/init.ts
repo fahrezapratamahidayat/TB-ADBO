@@ -7,12 +7,12 @@ import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDUAmSUpw90OPyAlcSCHWKUjxv-VEYK7qk",
-  authDomain: "tb-adbo.firebaseapp.com",
-  projectId: "tb-adbo",
-  storageBucket: "tb-adbo.appspot.com",
-  messagingSenderId: "280688449805",
-  appId: "1:280688449805:web:f10d8be22228d6a1f4b844"
+  apiKey: "AIzaSyDJcbcPQ8BENZrVGsGgQE_8x1RiV6DuqEg",
+  authDomain: "next-app-52f76.firebaseapp.com",
+  projectId: "next-app-52f76",
+  storageBucket: "next-app-52f76.appspot.com",
+  messagingSenderId: "821903277612",
+  appId: "1:821903277612:web:233b1a84456e5f2b561b89"
 };
 
 // Initialize Firebase

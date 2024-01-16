@@ -1,6 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import { Suspense, useEffect, useState } from "react";
 
 export default function DetailPage({ params }: { params: { slug: string } }) {
@@ -209,7 +210,9 @@ export default function DetailPage({ params }: { params: { slug: string } }) {
                   <div className="flex ">
                     <div className="relative  overflow-hidden">
                       {profile && profile.profileUrl ? (
-                        <img
+                        <Image 
+                          width={50}
+                          height={50}
                           src={profile.profileUrl}
                           alt=""
                           className="w-[50px] h-[50px] object-cover rounded-[2rem]"
@@ -243,7 +246,7 @@ export default function DetailPage({ params }: { params: { slug: string } }) {
                       {stories && stories.description}
                     </p>
                     <div className="">
-                      <img src={stories && stories.photoURL} alt="1" />
+                      <Image width={300} height={300} src={stories && stories.photoURL} alt="1" />
                     </div>
                   </div>
                   <div className="bg-white shadow-lg drop-shadow-lg rounded-[2rem] w-full mt-5 px-2 h-[1.76981rem] flex items-center justify-between">
@@ -252,16 +255,16 @@ export default function DetailPage({ params }: { params: { slug: string } }) {
                         className="flex items-center"
                         onClick={() => handleLike(params.slug)}
                       >
-                        <img src="/src/Images/like.png" alt="" />
+                        <Image width={20} height={20} src="/src/Images/like.png" alt="" />
                         <h2 className="">{stories && stories.likes}</h2>
                       </button>
                     </div>
                     <div className="flex items-center">
-                      <img src="/src/Images/chat.png" alt="" />
+                      <Image width={20} height={20} src="/src/Images/chat.png" alt="" />
                       <h2 className="">{totalComments}</h2>
                     </div>
                     <div className="flex items-center">
-                      <img src="/src/Images/share.png" alt="" />
+                      <Image width={20} height={20} src="/src/Images/share.png" alt="" />
                       <h2 className=""></h2>
                     </div>
                   </div>
@@ -272,7 +275,9 @@ export default function DetailPage({ params }: { params: { slug: string } }) {
                           key={comment.comment}
                           className="flex bg-white text-black py-2 px-3 rounded-lg shadow-md drop-shadow-md"
                         >
-                          <img
+                          <Image 
+                            width={50}
+                            height={50}
                             src={comment.profileUrl}
                             alt=""
                             className="w-[50px] h-[50px] rounded-full"
