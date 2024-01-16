@@ -1,9 +1,8 @@
 "use client";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import Link from "next/link";
 
-export default function DashboardPage() {
+export default function SettingPage() {
   const { data: session, status }: { data: any; status: string } = useSession();
   return (
     <>
@@ -20,7 +19,7 @@ export default function DashboardPage() {
             <path
               fill-rule="evenodd"
               clip-rule="evenodd"
-              d="M46.5894 0.160034H61.4106C62.6587 0.160034 63.1113 0.28999 63.5676 0.53402C64.0239 0.7755 64.382 1.13615 64.626 1.59245C64.87 2.04875 65 2.50135 65 3.74947V8.07059C65 9.31872 64.87 9.77132 64.626 10.2276C64.382 10.6839 64.0239 11.042 63.5676 11.286C63.1113 11.5301 62.6587 11.66 61.4106 11.66H46.5894C45.3413 11.66 44.8887 11.5301 44.4324 11.286C43.9761 11.042 43.618 10.6839 43.374 10.2276C43.13 9.77132 43 9.31872 43 8.07059V3.74947C43 2.50135 43.13 2.04875 43.374 1.59245C43.618 1.13615 43.9761 0.77805 44.4324 0.53402C44.8887 0.28999 45.3413 0.160034 46.5894 0.160034ZM46.5894 1.16003C45.6025 1.16003 45.2579 1.22657 44.904 1.41583C44.622 1.56666 44.4066 1.78202 44.2558 2.06405C44.0665 2.41794 44 2.76249 44 3.74947V8.07059C44 9.05757 44.0665 9.40213 44.2558 9.75602C44.4066 10.038 44.622 10.2534 44.904 10.4042C45.2579 10.5935 45.6025 10.66 46.5894 10.66H61.4106C62.3975 10.66 62.7421 10.5935 63.096 10.4042C63.378 10.2534 63.5934 10.038 63.7442 9.75602C63.9335 9.40213 64 9.05757 64 8.07059V3.74947C64 2.76249 63.9335 2.41794 63.7442 2.06405C63.5934 1.78202 63.378 1.56666 63.096 1.41583C62.7421 1.22657 62.3975 1.16003 61.4106 1.16003H46.5894ZM67.5 5.85004C67.5 7.08661 66 7.85004 66 7.85004V3.85004C66 3.85004 67.5 4.61346 67.5 5.85004Z"
+              d="M46.5894 0.160034H61.4106C62.6587 0.160034 63.1113 0.28999 63.5676 0.53402C64.0239 0.77805 64.382 1.13615 64.626 1.59245C64.87 2.04875 65 2.50135 65 3.74947V8.07059C65 9.31872 64.87 9.77132 64.626 10.2276C64.382 10.6839 64.0239 11.042 63.5676 11.286C63.1113 11.5301 62.6587 11.66 61.4106 11.66H46.5894C45.3413 11.66 44.8887 11.5301 44.4324 11.286C43.9761 11.042 43.618 10.6839 43.374 10.2276C43.13 9.77132 43 9.31872 43 8.07059V3.74947C43 2.50135 43.13 2.04875 43.374 1.59245C43.618 1.13615 43.9761 0.77805 44.4324 0.53402C44.8887 0.28999 45.3413 0.160034 46.5894 0.160034ZM46.5894 1.16003C45.6025 1.16003 45.2579 1.22657 44.904 1.41583C44.622 1.56666 44.4066 1.78202 44.2558 2.06405C44.0665 2.41794 44 2.76249 44 3.74947V8.07059C44 9.05757 44.0665 9.40213 44.2558 9.75602C44.4066 10.038 44.622 10.2534 44.904 10.4042C45.2579 10.5935 45.6025 10.66 46.5894 10.66H61.4106C62.3975 10.66 62.7421 10.5935 63.096 10.4042C63.378 10.2534 63.5934 10.038 63.7442 9.75602C63.9335 9.40213 64 9.05757 64 8.07059V3.74947C64 2.76249 63.9335 2.41794 63.7442 2.06405C63.5934 1.78202 63.378 1.56666 63.096 1.41583C62.7421 1.22657 62.3975 1.16003 61.4106 1.16003H46.5894ZM67.5 5.85004C67.5 7.08661 66 7.85004 66 7.85004V3.85004C66 3.85004 67.5 4.61346 67.5 5.85004Z"
               fill="black"
               fill-opacity="0.36"
             />
@@ -48,56 +47,6 @@ export default function DashboardPage() {
         </div>
         <div className="flex items-center justify-center flex-col w-full">
           <h1 className="text-2xl font-bold ">Dashboard</h1>
-        </div>
-        <div className="flex items-center mt-[31px] px-[46px]">
-          <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-            <svg
-              className="absolute w-12 h-12 text-gray-400 -left-1"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </div>
-          <div className="flex flex-col">
-            <h1 className="font-bold text-base">Selamat Datang</h1>
-            <h1 className="font-bold text-base">
-              {session && session.user.name}
-            </h1>
-          </div>
-        </div>
-        <div className="mt-[61px] mx-[30px] h-[205px] bg-white rounded-[11px]">
-          <div className="grid grid-cols-2 grid-rows-2 items-center justify-center w-full">
-            <div className="flex items-center flex-col mt-2">
-              <Link href="/dashboard/profile" className="flex flex-col items-center">
-                <Image width={75} height={75} src="/src/Images/girl.png" alt="" />
-                <h2 className="font-bold text-base">Profile</h2>
-              </Link>
-            </div>
-            <div className="flex items-center flex-col mt-2">
-              <Link href="/dashboard/uploadstory"  className="flex flex-col items-center">
-                <Image width={75} height={75} src="/src/Images/cloud.png" alt="" />
-                <h2 className="font-bold text-base">Upload Story</h2>
-              </Link>
-            </div>
-            <div className="flex items-center flex-col mt-2">
-              <Link href="/dashboard/travel"  className="flex flex-col items-center">
-                <Image width={60} height={60} src="/src/Images/pass.png" alt="" />
-                <h2 className="font-bold text-base">Travel Notes</h2>
-              </Link>
-            </div>
-            <div className="flex items-center flex-col mt-2">
-              <Link href="/dashboard/setting"  className="flex flex-col items-center">
-                <Image width={60} height={60} src="/src/Images/gear.png" alt="" />
-                <h2 className="font-bold text-base">setting</h2>
-              </Link>
-            </div>
-          </div>
         </div>
       </div>
     </>

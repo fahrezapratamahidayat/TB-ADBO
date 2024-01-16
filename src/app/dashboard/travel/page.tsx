@@ -3,6 +3,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
+import Image from "next/image";
 
 export default function ProfilePage() {
   const { data: session, status }: { data: any; status: string } = useSession();
@@ -135,7 +136,6 @@ export default function ProfilePage() {
             <p>Loading stories...</p>
           ) : (
             <div className="flex flex-col items-center">
-              {/* Render your fetched data here */}
               {stories.map((story: any) => (
                 <div
                   className={`bg-white w-full px-2 py-1 mt-2 pb-5 ${
@@ -180,18 +180,18 @@ export default function ProfilePage() {
                         className="flex items-center"
                         onClick={() => handleLike(story.id)}
                       >
-                        <img src="/src/Images/like.png" alt="" />
+                        <Image width={20} height={20} src="/src/Images/like.png" alt="" />
                         <h2 className="">{story.likes}</h2>
                       </button>
                     </div>
                     <div className="flex items-center">
                       <Link href={`/dashboard/travel/${story.id}`} className="flex items-center">
-                        <img src="/src/Images/chat.png" alt="" />
+                        <Image width={20} height={20} src="/src/Images/chat.png" alt="" />
                         <h2 className="">80</h2>
                       </Link>
                     </div>
                     <div className="flex items-center">
-                      <img src="/src/Images/share.png" alt="" />
+                      <Image width={20} height={20} src="/src/Images/share.png" alt="" />
                       <h2 className="">80</h2>
                     </div>
                   </div>

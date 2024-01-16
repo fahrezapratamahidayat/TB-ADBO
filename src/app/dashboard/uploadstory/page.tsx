@@ -4,9 +4,10 @@ import { storage } from "@/lib/firebase/init";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function UploadStoryPage() {
-  const [selectedImage, setSelectedImage] = useState<File>();
+  const [selectedImage, setSelectedImage] = useState<any>();
   const [description, setDescription] = useState('');
   const [location, setLocation] = useState('');
   const [loading, setLoading] = useState(false);
@@ -23,7 +24,7 @@ export default function UploadStoryPage() {
   };
 
   const removeSelectedImage = () => {
-    setSelectedImage();
+    setSelectedImage("empty");
   };
 
   // const handleSubmit = async (event: any) => {
@@ -238,7 +239,9 @@ export default function UploadStoryPage() {
         <form onSubmit={handleSubmit}>
           <div className="px-3 mt-[3.62rem]">
             <div className="flex items-center">
-              <img
+              <Image
+                width={54}
+                height={54}
                 src="/src/Images/AddCamera.png"
                 alt=""
                 className="object-cover"
@@ -255,10 +258,12 @@ export default function UploadStoryPage() {
             {selectedImage && (
               <div className="mt-[50px] flex items-center flex-col justify-center">
                 <div className="w-full overflow-y-auto flex items-center justify-center">
-                  <img
+                  <Image
+                    width={250}
+                    height={250}
                     src={URL.createObjectURL(selectedImage)}
                     alt="Thumb"
-                    className="h-[10rem] object-cover h-5"
+                    className="h-[10rem] object-cover"
                   />
                 </div>
                 <button
@@ -280,7 +285,7 @@ export default function UploadStoryPage() {
               </div>
             </div>
             <div className="flex items-center mt-[2rem]">
-              <img src="/src/Images/dot.png" alt="" className="object-cover " />
+              <Image width={34} height={34} src="/src/Images/dot.png" alt="" className="object-cover " />
               <div className="ml-[2.22rem]  bg-white border w-[18.0625rem] rounded-md flex items-center">
                 <textarea
                   rows={4}
