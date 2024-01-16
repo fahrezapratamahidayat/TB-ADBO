@@ -28,7 +28,7 @@ export default function ProfilePage() {
       }
     };
     fetchStories();
-  }, []);
+  });
 
   const handleLike = async (storyId: string) => {
     const response = await fetch(
