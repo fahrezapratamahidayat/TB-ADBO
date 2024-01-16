@@ -2,6 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 
 export default function DetailPage({ params }: { params: { slug: string } }) {
@@ -11,6 +12,7 @@ export default function DetailPage({ params }: { params: { slug: string } }) {
   const [text, setText] = useState<string>("");
   const { data: session, status }: { data: any; status: string } = useSession();
   const [loading, setLoading] = useState<boolean>(true);
+  const router = useRouter();
 
   const fetchData = async () => {
     try {
@@ -164,7 +166,7 @@ export default function DetailPage({ params }: { params: { slug: string } }) {
           </div>
           <div className="w-[55%] flex items-center justify-between ml-5 ">
             <div className="">
-              <button>
+              <button onClick={() => router.push('/dashboard/travel')}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -196,10 +198,10 @@ export default function DetailPage({ params }: { params: { slug: string } }) {
                 </svg>
               </button>
             </div>
-            <h1 className="text-[25px] font-bold">Profile</h1>
+            <h1 className="text-[25px] font-bold text-black">Travel Notes</h1>
           </div>
           <div className="px-5">
-            <h1 className="text-bold">Travel Details</h1>
+            <h1 className="text-bold text-base text-black">Travel Details</h1>
             {loading ? (
               <p>Loading stories...</p>
             ) : (
