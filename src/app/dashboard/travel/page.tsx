@@ -10,7 +10,7 @@ export default function ProfilePage() {
   const { data: session, status }: { data: any; status: string } = useSession();
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [ setError] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
