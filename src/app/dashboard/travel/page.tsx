@@ -17,9 +17,6 @@ export default function ProfilePage() {
     const fetchStories = async () => {
       try {
         const response = await fetch("/api/story/getallstory", {
-          headers: {
-            "Cache-Control": "no-store",
-          }
         });
         if (!response.ok) {
           throw new Error("Failed to fetch stories");
@@ -43,7 +40,6 @@ export default function ProfilePage() {
         headers: {
           "Content-Type": "application/json",
         },
-        next: { revalidate: 5 },
       }
     );
     const data = await response.json();

@@ -1,4 +1,5 @@
 "use client";
+import Card from "@/components/card/card";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -18,6 +19,7 @@ export default function Home() {
           <path d="M375 -1H0V252L375 76.5V-1Z" fill="#BAD7FF" />
         </svg>
         <main className="w-full h-full relative z-10">
+          <Card />
           <div className="w-full flex justify-between items-center py-2 px-5 z-99">
             <h2 className="text-base font-bold text-black ">9:41</h2>
             <svg
