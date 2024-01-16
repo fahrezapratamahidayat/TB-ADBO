@@ -16,12 +16,14 @@ export default function ProfilePage() {
   useEffect(() => {
     const fetchStories = async () => {
       try {
-        const response = await fetch("/api/story/getallstory");
+        const response = await fetch("/api/story/getallstory", {
+          cache: 'no-store',
+          next: { revalidate: 5 },
+        });
         if (!response.ok) {
           throw new Error("Failed to fetch stories");
         }
         const data = await response.json();
-        const filteredData = data.filter((story: any) => story.status == true);
         setStories(data);
       } catch (error: any) {
         setError(error.message);
