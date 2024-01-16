@@ -40,6 +40,7 @@ export default function ProfilePage() {
         headers: {
           "Content-Type": "application/json",
         },
+        next: { revalidate: 5 },
       }
     );
     const data = await response.json();
@@ -167,7 +168,7 @@ export default function ProfilePage() {
                         <h1 className="text-[16px] font-bold">
                           {story.username}
                         </h1>
-                        <h1 className="text-[16px] font-bold">
+                        <h1 className="text-[16px] font-semibold text-slate-500">
                           {story.location}
                         </h1>
                       </div>

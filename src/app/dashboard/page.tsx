@@ -63,7 +63,7 @@ export default function DashboardPage() {
           <div className="flex items-center mt-[31px] px-[46px]">
             <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
               {profile && profile.profileUrl ? (
-                <Image src={profile.profileUrl} alt="" width={40} height={40} />
+                <Image src={profile.profileUrl} alt="" width={60} height={60} />
               ) : (
                 <svg
                   className="absolute w-12 h-12 text-gray-400 -left-1"
