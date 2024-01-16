@@ -10,14 +10,13 @@ export default function ProfilePage() {
   const { data: session, status }: { data: any; status: string } = useSession();
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [ setError] = useState(null);
+  const [error, setError] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
     const fetchStories = async () => {
       try {
-        const response = await fetch("/api/story/getallstory", {
-        });
+        const response = await fetch("/api/story/getallstory");
         if (!response.ok) {
           throw new Error("Failed to fetch stories");
         }
@@ -167,7 +166,7 @@ export default function ProfilePage() {
                         <h1 className="text-[16px] font-bold">
                           {story.username}
                         </h1>
-                        <h1 className="text-[16px] font-semibold text-slate-500">
+                        <h1 className="text-[16px] font-bold">
                           {story.location}
                         </h1>
                       </div>
