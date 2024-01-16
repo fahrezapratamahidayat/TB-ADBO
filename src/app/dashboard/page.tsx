@@ -2,9 +2,19 @@
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function DashboardPage() {
   const { data: session, status }: { data: any; status: string } = useSession();
+  const [profile, setProfile] = useState<any>([]);
+  const fetchUser = async () => {
+    const snapshot = await fetch(`/api/user/getuser?id=${session?.user.id}`);
+    const res = await snapshot.json();
+    setProfile(res.data);
+  };
+  useEffect(() => {
+    fetchUser();
+  });
   return (
     <>
       <div className="bg-primary min-h-screen w-full relative">
@@ -52,20 +62,24 @@ export default function DashboardPage() {
           </div>
           <div className="flex items-center mt-[31px] px-[46px]">
             <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-              <svg
-                className="absolute w-12 h-12 text-gray-400 -left-1"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
+              {profile && profile.profileUrl ? (
+                <Image src={profile.profileUrl} alt="" width={40} height={40} />
+              ) : (
+                <svg
+                  className="absolute w-12 h-12 text-gray-400 -left-1"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              )}
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col ml-4">
               <h1 className="font-bold text-base">Selamat Datang</h1>
               <h1 className="font-bold text-base">
                 {session && session.user.name}

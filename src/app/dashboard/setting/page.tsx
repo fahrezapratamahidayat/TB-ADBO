@@ -9,6 +9,7 @@ export default function SettingPage() {
     signOut();
     window.location.href = "/";
   }
+  
   return (
     <>
       <div className="bg-primary min-h-screen w-full relative">
