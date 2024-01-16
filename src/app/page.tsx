@@ -1,5 +1,4 @@
 "use client";
-import Card from "@/components/card/card";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
