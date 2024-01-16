@@ -17,8 +17,9 @@ export default function ProfilePage() {
     const fetchStories = async () => {
       try {
         const response = await fetch("/api/story/getallstory", {
-          cache: 'no-store',
-          next: { revalidate: 5 },
+          headers: {
+            "Cache-Control": "no-store",
+          }
         });
         if (!response.ok) {
           throw new Error("Failed to fetch stories");
