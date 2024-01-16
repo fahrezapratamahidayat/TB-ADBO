@@ -1,12 +1,49 @@
-'use client'
-import Image from "next/image";
-import { useRouter } from "next/navigation";
+"use client";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import useSWR from "swr";
 
-export default function Home() {
-  const router = useRouter()
+export default function ProfilePage() {
+  const { data: session, status }: { data: any; status: string } = useSession();
+  const [stories, setStories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchStories = async () => {
+      try {
+        const response = await fetch("/api/story/getallstory");
+        if (!response.ok) {
+          throw new Error("Failed to fetch stories");
+        }
+        const data = await response.json();
+        const filteredData = data.filter((story: any) => story.status == true);
+        setStories(data);
+      } catch (error: any) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchStories();
+  }, []);
+
+  const handleLike = async (storyId: string) => {
+    const response = await fetch(
+      `/api/story/likes?userId=${session?.user.id}&storyId=${storyId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+  };
   return (
     <>
-      <div className="bg-primary min-h-screen relative">
+      <div className="bg-primary min-h-screen relative w-full">
         <div className="absolute top-0 left-0 -z-10">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +69,7 @@ export default function Home() {
               clipRule="evenodd"
               d="M46.5894 0.160034H61.4106C62.6587 0.160034 63.1113 0.28999 63.5676 0.53402C64.0239 0.77805 64.382 1.13615 64.626 1.59245C64.87 2.04875 65 2.50135 65 3.74947V8.07059C65 9.31872 64.87 9.77132 64.626 10.2276C64.382 10.6839 64.0239 11.042 63.5676 11.286C63.1113 11.5301 62.6587 11.66 61.4106 11.66H46.5894C45.3413 11.66 44.8887 11.5301 44.4324 11.286C43.9761 11.042 43.618 10.6839 43.374 10.2276C43.13 9.77132 43 9.31872 43 8.07059V3.74947C43 2.50135 43.13 2.04875 43.374 1.59245C43.618 1.13615 43.9761 0.77805 44.4324 0.53402C44.8887 0.28999 45.3413 0.160034 46.5894 0.160034ZM46.5894 1.16003C45.6025 1.16003 45.2579 1.22657 44.904 1.41583C44.622 1.56666 44.4066 1.78202 44.2558 2.06405C44.0665 2.41794 44 2.76249 44 3.74947V8.07059C44 9.05757 44.0665 9.40213 44.2558 9.75602C44.4066 10.038 44.622 10.2534 44.904 10.4042C45.2579 10.5935 45.6025 10.66 46.5894 10.66H61.4106C62.3975 10.66 62.7421 10.5935 63.096 10.4042C63.378 10.2534 63.5934 10.038 63.7442 9.75602C63.9335 9.40213 64 9.05757 64 8.07059V3.74947C64 2.76249 63.9335 2.41794 63.7442 2.06405C63.5934 1.78202 63.378 1.56666 63.096 1.41583C62.7421 1.22657 62.3975 1.16003 61.4106 1.16003H46.5894ZM67.5 5.85004C67.5 7.08661 66 7.85004 66 7.85004V3.85004C66 3.85004 67.5 4.61346 67.5 5.85004Z"
               fill="black"
-              fill-opacity="0.36"
+              fillOpacity="0.36"
             />
             <rect
               x="45"
@@ -56,11 +93,112 @@ export default function Home() {
             />
           </svg>
         </div>
-        <div className="flex items-center flex-col w-full mt-[450px] px-[1rem] drop-shadow-lg">
-          <button className="w-full p-2 bg-white rounded-[5px]" onClick={() => router.push('/auth/login')}>Login</button>
-          <button className="w-full p-2 bg-white rounded-[5px] mt-[18px]" onClick={() => router.push('/auth/register')}>
-            Sign up
-          </button>
+        <div className="w-[55%] flex items-center justify-between ml-5 ">
+          <div className="">
+            <button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                  stroke="black"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M12 8L8 12L12 16"
+                  stroke="black"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M16 12H8"
+                  stroke="black"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+          <h1 className="text-[25px] font-bold">Profile</h1>
+        </div>
+        <div className="px-5">
+          <h1 className="text-bold">Travel Details</h1>
+          {loading ? (
+            <p>Loading stories...</p>
+          ) : (
+            <div className="flex flex-col items-center">
+              {/* Render your fetched data here */}
+              {stories.map((story: any) => (
+                <div
+                  className={`bg-white w-full px-2 py-1 mt-2 pb-5 ${
+                    story.status ? "bg-green-100" : "bg-white/50"
+                  }`}
+                  key={story.id}
+                >
+                  <h1 className="">{story.status ? "Published" : "Draft"}</h1>
+                  <div className="flex ">
+                    <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                      <svg
+                        className="absolute w-12 h-12 text-gray-400 -left-1"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                    </div>
+                    <div className="ml-4 flex-col flex">
+                      <h1 className="text-[16px] font-bold">
+                        {story.username}
+                      </h1>
+                      <h1 className="text-[16px] font-bold">
+                        {story.location}
+                      </h1>
+                    </div>
+                  </div>
+                  <div className="w-full">
+                    <p>{story.description}</p>
+                    <div className="">
+                      <img src={story.photoURL} alt={story.username} />
+                    </div>
+                  </div>
+                  <div className="bg-white shadow-lg drop-shadow-lg rounded-[2rem] w-full mt-5 px-2 h-[1.76981rem] flex items-center justify-between">
+                    <div className="flex items-center">
+                      <button
+                        className="flex items-center"
+                        onClick={() => handleLike(story.id)}
+                      >
+                        <img src="/src/Images/like.png" alt="" />
+                        <h2 className="">{story.likes}</h2>
+                      </button>
+                    </div>
+                    <div className="flex items-center">
+                      <Link href={`/dashboard/travel/${story.id}`} className="flex items-center">
+                        <img src="/src/Images/chat.png" alt="" />
+                        <h2 className="">80</h2>
+                      </Link>
+                    </div>
+                    <div className="flex items-center">
+                      <img src="/src/Images/share.png" alt="" />
+                      <h2 className="">80</h2>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </>

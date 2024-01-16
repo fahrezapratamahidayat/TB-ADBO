@@ -1,12 +1,41 @@
-'use client'
-import Image from "next/image";
+"use client";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-export default function Home() {
-  const router = useRouter()
+export default function RegisterPage() {
+  const router = useRouter();
+  const [error, setError] = useState("");
+  const [isLoading, setIsloading] = useState(false);
+  const handleRegister = async (event: any) => {
+    event.preventDefault();
+    setIsloading(true);
+    setError("");
+    const res = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: event.target.username.value,
+        email: event.target.email.value,
+        password: event.target.password.value,
+        phone: event.target.phone.value,
+      }),
+    });
+    if (res.status === 200) {
+      event.target.reset();
+      alert("register success");
+      setIsloading(false);
+      router.push("/auth/login");
+    } else {
+      setIsloading(false);
+      setError("email already exist");
+      alert("failed");
+    }
+  };
   return (
     <>
-      <div className="bg-primary min-h-screen relative">
+      <div className="bg-primary min-h-screen relative w-full">
         <div className="absolute top-0 left-0 -z-10">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +61,7 @@ export default function Home() {
               clipRule="evenodd"
               d="M46.5894 0.160034H61.4106C62.6587 0.160034 63.1113 0.28999 63.5676 0.53402C64.0239 0.77805 64.382 1.13615 64.626 1.59245C64.87 2.04875 65 2.50135 65 3.74947V8.07059C65 9.31872 64.87 9.77132 64.626 10.2276C64.382 10.6839 64.0239 11.042 63.5676 11.286C63.1113 11.5301 62.6587 11.66 61.4106 11.66H46.5894C45.3413 11.66 44.8887 11.5301 44.4324 11.286C43.9761 11.042 43.618 10.6839 43.374 10.2276C43.13 9.77132 43 9.31872 43 8.07059V3.74947C43 2.50135 43.13 2.04875 43.374 1.59245C43.618 1.13615 43.9761 0.77805 44.4324 0.53402C44.8887 0.28999 45.3413 0.160034 46.5894 0.160034ZM46.5894 1.16003C45.6025 1.16003 45.2579 1.22657 44.904 1.41583C44.622 1.56666 44.4066 1.78202 44.2558 2.06405C44.0665 2.41794 44 2.76249 44 3.74947V8.07059C44 9.05757 44.0665 9.40213 44.2558 9.75602C44.4066 10.038 44.622 10.2534 44.904 10.4042C45.2579 10.5935 45.6025 10.66 46.5894 10.66H61.4106C62.3975 10.66 62.7421 10.5935 63.096 10.4042C63.378 10.2534 63.5934 10.038 63.7442 9.75602C63.9335 9.40213 64 9.05757 64 8.07059V3.74947C64 2.76249 63.9335 2.41794 63.7442 2.06405C63.5934 1.78202 63.378 1.56666 63.096 1.41583C62.7421 1.22657 62.3975 1.16003 61.4106 1.16003H46.5894ZM67.5 5.85004C67.5 7.08661 66 7.85004 66 7.85004V3.85004C66 3.85004 67.5 4.61346 67.5 5.85004Z"
               fill="black"
-              fill-opacity="0.36"
+              fillOpacity="0.36"
             />
             <rect
               x="45"
@@ -56,11 +85,90 @@ export default function Home() {
             />
           </svg>
         </div>
-        <div className="flex items-center flex-col w-full mt-[450px] px-[1rem] drop-shadow-lg">
-          <button className="w-full p-2 bg-white rounded-[5px]" onClick={() => router.push('/auth/login')}>Login</button>
-          <button className="w-full p-2 bg-white rounded-[5px] mt-[18px]" onClick={() => router.push('/auth/register')}>
-            Sign up
-          </button>
+        <div className="w-full flex items-center px-5 ">
+          <div className="mr-[86px]">
+            <button className="" onClick={() => router.push("/")}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                  stroke="black"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M12 8L8 12L12 16"
+                  stroke="black"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M16 12H8"
+                  stroke="black"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+          <h1 className="text-[25px] font-bold ">Sign Up</h1>
+        </div>
+        <div className="mt-[69px]">
+          <form onSubmit={handleRegister}>
+            <div className="px-5 flex flex-col gap-2">
+              <input
+                type="text"
+                placeholder="Username"
+                id="username"
+                name="username"
+                className="rounded-[5px] p-5 w-full shadow-lg drop-shadow-lg"
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                id="email"
+                name="email"
+                className="rounded-[5px] p-5 w-full shadow-lg drop-shadow-lg"
+              />
+              <input
+                type="text"
+                placeholder="phone"
+                id="phone"
+                name="phone"
+                className="rounded-[5px] p-5 w-full shadow-lg drop-shadow-lg"
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                id="password"
+                name="password"
+                className="rounded-[5px] p-5 w-full shadow-lg drop-shadow-lg"
+              />
+              <input
+                type="password"
+                placeholder="Confirm password"
+                id="confirmPassword"
+                name="confirmPassword"
+                className="rounded-[5px] p-5 w-full shadow-lg drop-shadow-lg"
+              />
+            </div>
+            <div className="flex items-center flex-col w-full mt-[70px] px-[1rem] drop-shadow-lg">
+              <button
+                className="w-full p-2 bg-white rounded-[5px]"
+                type="submit"
+              >
+                Login
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </>
